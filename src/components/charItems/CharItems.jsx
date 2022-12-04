@@ -1,26 +1,20 @@
-import React from "react";
+import React, { useRef } from "react";
 const CharItems = ({ data, onCharacterComics }) => {
+	const listRef = useRef([]);
 
-	const listRef = [];
-
-	const cards = data.map(item => {
-		const { name, thumbnail, id, isImg, active } = item;
-
+	const cards = data.map((item, i) => {
+		const { name, thumbnail, id, isImg } = item;
 		const style = isImg ? { objectFit: 'contain' } : null;
-
-		// let clazz = active ? "char__item char__item_selected" : 'char__item';
-		const mycard = React.createRef();
-		listRef.push(mycard);
 		return (
 			<li
 				tabIndex={0}
-				ref={mycard}
+				ref={elem => listRef.current[i] = elem}
 				className={'char__item'}
 				key={id}
 				onFocus={() => {
 					onCharacterComics(id)
-					listRef.forEach(item => item.current.className = 'char__item')
-					mycard.current.className = 'char__item char__item_selected';
+					listRef.current.forEach(item => { item.classList.remove('char__item_selected') })
+					listRef.current[i].classList.add('char__item_selected');
 				}}
 			>
 				<img src={thumbnail} alt={name} style={style} />
