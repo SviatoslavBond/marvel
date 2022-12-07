@@ -66,3 +66,9 @@
 		text-align: center;
 	}
 }
+@media (min-width: 1000px) {
+	.char__info {
+		right: 100px;
+		top: 50px;
+	}
+}
