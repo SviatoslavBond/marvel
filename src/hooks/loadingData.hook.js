@@ -4,89 +4,89 @@ import ErrorMessage from "../components/errorMessage/error";
 import Spiner from "../components/spinner/spiner";
 
 export const useLoadingMarvelData = (
-  initialOffset,
-  usingComponent,
-  numOfItemLoading
+	initialOffset,
+	usingComponent,
+	numOfItemLoading
 ) => {
-  const [data, setData] = useState([]);
-  const [offset, setOfsset] = useState(initialOffset);
-  const [newItemLoading, setNewItemLoading] = useState(true);
-  const [comicsEnded, setComicsEnded] = useState(false);
-  const [loadOnScroll, setLoadOnScroll] = useState(false);
+	const [data, setData] = useState([]);
+	const [offset, setOfsset] = useState(initialOffset);
+	const [newItemLoading, setNewItemLoading] = useState(true);
+	const [comicsEnded, setComicsEnded] = useState(false);
+	const [loadOnScroll, setLoadOnScroll] = useState(false);
 
-  const {
-    loading,
-    error,
-    getComics,
-    clearError,
-    getAllCharacters,
-    setLoading,
-  } = useMarvelService();
-  // console.log("");
-  // console.log(
-  //   `render : loading:${loading} error:${error} newItemLoading:${newItemLoading} data:${data}`
-  // );
+	const {
+		loading,
+		error,
+		getComics,
+		clearError,
+		getAllCharacters,
+		setLoading,
+	} = useMarvelService();
+	// console.log("");
+	// console.log(
+	//   `render : loading:${loading} error:${error} newItemLoading:${newItemLoading} data:${data}`
+	// );
 
-  useEffect(() => {
-    onRequest(true);
-    window.addEventListener("scroll", onRequestScroll);
-    return () => {
-      window.removeEventListener("scroll", onRequestScroll);
-    };
-  }, []);
+	useEffect(() => {
+		onRequest(true);
+		window.addEventListener("scroll", onRequestScroll);
+		return () => {
+			window.removeEventListener("scroll", onRequestScroll);
+		};
+	}, []);
 
-  useEffect(() => {
-    if (loadOnScroll) {
-      console.log("effect scroll");
+	useEffect(() => {
+		if (loadOnScroll) {
+			console.log("effect scroll");
 
-      onRequest();
-    }
-  }, [loadOnScroll]);
+			onRequest();
+		}
+	}, [loadOnScroll]);
 
-  const onDataLoading = (newData) => {
-    let ended = false;
-    if (newData.length < numOfItemLoading) {
-      ended = true;
-    }
-    setLoading(false);
-    setLoadOnScroll(false);
-    setComicsEnded(ended);
-    setOfsset((offset) => offset + numOfItemLoading);
-    setData((data) => [...data, ...newData]);
-    setNewItemLoading(false);
-  };
+	const onDataLoading = (newData) => {
+		let ended = false;
+		if (newData.length < numOfItemLoading) {
+			ended = true;
+		}
+		// setLoading(false);
+		setLoadOnScroll(false);
+		setComicsEnded(ended);
+		setOfsset((offset) => offset + numOfItemLoading);
+		setData((data) => [...data, ...newData]);
+		setNewItemLoading(false);
+	};
 
-  const onRequest = (initial) => {
-    //Pagination && //Get characters from Marvel API
-    clearError();
-    initial ? setNewItemLoading(false) : setNewItemLoading(true);
-    if (usingComponent === "comics") {
-      getComics(offset).then(onDataLoading);
-    } else {
-      getAllCharacters(offset).then(onDataLoading);
-    }
-  };
+	const onRequest = (initial) => {
+		//Pagination && //Get characters from Marvel API
+		clearError();
+		initial ? setNewItemLoading(false) : setNewItemLoading(true);
+		if (usingComponent === "comics") {
+			getComics(offset).then(onDataLoading);
+		} else {
+			getAllCharacters(offset).then(onDataLoading);
+		}
+	};
 
-  const onRequestScroll = () => {
-    const scrollTop = window.scrollY;
-    const screen = window.innerHeight;
-    const heigth = document.documentElement.scrollHeight;
-    if (scrollTop + screen === heigth) {
-      setLoadOnScroll(true);
-    }
-  };
+	const onRequestScroll = () => {
+		const scrollTop = window.scrollY;
+		const screen = window.innerHeight;
+		const heigth = document.documentElement.scrollHeight;
+		if (scrollTop + screen === heigth) {
+			setLoadOnScroll(true);
+		}
+	};
 
-  const style = comicsEnded ? { display: "none" } : null;
-  const errorMessage = error ? <ErrorMessage /> : null;
-  const spinner = loading && !newItemLoading ? <Spiner /> : null;
+	const style = comicsEnded ? { display: "none" } : null;
+	const errorMessage = error ? <ErrorMessage /> : null;
+	const spinner = loading && !newItemLoading ? <Spiner /> : null;
 
-  return {
-    style,
-    errorMessage,
-    spinner,
-    onRequest,
-    newItemLoading,
-    data,
-    setLoading,
-  };
+	return {
+		style,
+		errorMessage,
+		spinner,
+		onRequest,
+		newItemLoading,
+		data,
+		setLoading,
+	};
 };

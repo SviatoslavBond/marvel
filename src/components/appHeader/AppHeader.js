@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import "./appHeader.scss";
 
 const AppHeader = () => {
+  const activeLink = ({ isActive }) => (isActive ? { color: "red" } : null);
   return (
     <header className="app__header">
       <h1 className="app__title">
@@ -12,13 +13,13 @@ const AppHeader = () => {
       <nav className="app__menu">
         <ul>
           <li>
-            <NavLink exact activeStyle={{ color: "red" }} to={"/"}>
+            <NavLink style={activeLink} to={"/"}>
               Characters
             </NavLink>
           </li>
           /
           <li>
-            <NavLink exact activeStyle={{ color: "red" }} to={"/comics"}>
+            <NavLink style={activeLink} to={"/comics"}>
               Comics
             </NavLink>
           </li>
