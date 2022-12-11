@@ -44,6 +44,7 @@ export const useLoadingMarvelData = (
 	}, [loadOnScroll]);
 
 	const onDataLoading = (newData) => {
+
 		let ended = false;
 		if (newData.length < numOfItemLoading) {
 			ended = true;
@@ -51,7 +52,7 @@ export const useLoadingMarvelData = (
 		// setLoading(false);
 		setLoadOnScroll(false);
 		setComicsEnded(ended);
-		setOfsset((offset) => offset + numOfItemLoading);
+		setOfsset((offset) => offset + numOfItemLoading)
 		setData((data) => [...data, ...newData]);
 		setNewItemLoading(false);
 	};

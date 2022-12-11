@@ -32,12 +32,11 @@ const CharInfo = ({ idChar }) => {
 		}
 		getCharacter(idChar).then(onChararcterLoading);
 	};
-	console.log(character);
+
 	const skeleton = character || loading || error ? null : <Skeleton />;
 	const errorMessage = error ? <ErrorMessage /> : null;
 	const spinner = loading ? <Spiner /> : null;
-	const content =
-		loading || error || !character ? null : <View char={character} />;
+	const content = loading || error || !character ? null : <View char={character} />;
 	return (
 		<div className="char__info">
 			{skeleton}
