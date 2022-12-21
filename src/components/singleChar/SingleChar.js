@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import './singleComic.scss';
+import './singleChar.scss';
 
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import useMarvelService from '../services/MarvelSevices';
@@ -8,20 +8,21 @@ import AppBanner from '../appBanner/AppBanner';
 import ErrorMessage from '../errorMessage/error';
 import Spiner from "../spinner/spiner";
 const SingleComic = () => {
-	const { id } = useParams();
+	const { name } = useParams();
+
 	const [data, setData] = useState([]);
 
 	const {
 		loading,
 		error,
 		clearError,
-		getSingleComics,
+		getCharacterOnName,
 		setLoading,
 	} = useMarvelService();
 
 	useEffect(() => {
 		onRequest();
-	}, [id]);
+	}, [name]);
 
 	const onDataLoaded = (newData) => {
 		setLoading(false);
@@ -30,14 +31,13 @@ const SingleComic = () => {
 
 	const onRequest = () => {
 		clearError();
-		getSingleComics(id)
+		getCharacterOnName(name)
 			.then(onDataLoaded)
 	};
 
 	const errorMessage = error ? <ErrorMessage /> : null;
 	const spinner = loading ? <Spiner /> : null;
 	const content = loading || error ? null : <View data={data} />;
-	// console.log(`loading: ${loading} error : ${error}`);
 
 	return (
 		<>
@@ -45,28 +45,24 @@ const SingleComic = () => {
 			{errorMessage}
 			{spinner}
 			{content}
-			{/* {error ? <ErrorMessage /> : loading ? <Spiner /> : <View data={data} />} */}
 		</>
 
 	)
 }
 const View = ({ data }) => {
 	const navigate = useNavigate();
-	const { url, imgLink, title, descr, pageCount, language, price } = data;
+	const { url, name, description, thumbnail } = data;
 	return (
 		<>
-			<div className="single-comic">
+			<div className="single-char">
 				<a href={url}>
-					<img src={imgLink} alt={title} className="single-comic__img" />
+					<img src={thumbnail} alt={name} className="single-char__img" />
 				</a>
-				<div className="single-comic__info">
-					<h2 className="single-comic__name">{title}</h2>
-					<p className="single-comic__descr">{descr}</p>
-					<p className="single-comic__descr">{pageCount}</p>
-					<p className="single-comic__descr">Language: {language}</p>
-					<div className="single-comic__price">{price + '$'}</div>
+				<div className="single-char__info">
+					<h2 className="single-char__name">{name}</h2>
+					<p className="single-char__descr">{description || 'There is not description'}</p>
 				</div>
-				<button onClick={() => navigate(-1)} className="single-comic__back">Back to all</button>
+				<button onClick={() => navigate(-1)} className="single-char__back">Back home page</button>
 			</div>
 		</>
 	)

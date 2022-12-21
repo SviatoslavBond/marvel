@@ -5,11 +5,15 @@ import useMarvelService from "../services/MarvelSevices";
 import Spiner from "../spinner/spiner";
 import ErrorMessage from "../errorMessage/error";
 import Skeleton from "../skeleton/Skeleton";
+import FindChar from "../findChar/FindChar";
+
+
 
 import "./charInfo.scss";
 
 const CharInfo = ({ idChar }) => {
 	const [character, setCharacter] = useState(null); //1 Вибраний персонаж
+	// console.log(character, idChar);
 
 
 	const { loading, error, getCharacter } = useMarvelService();
@@ -30,7 +34,8 @@ const CharInfo = ({ idChar }) => {
 		if (!idChar) {
 			return;
 		}
-		getCharacter(idChar).then(onChararcterLoading);
+		getCharacter(idChar)
+			.then(onChararcterLoading);
 	};
 
 	const skeleton = character || loading || error ? null : <Skeleton />;
@@ -38,12 +43,17 @@ const CharInfo = ({ idChar }) => {
 	const spinner = loading ? <Spiner /> : null;
 	const content = loading || error || !character ? null : <View char={character} />;
 	return (
-		<div className="char__info">
-			{skeleton}
-			{errorMessage}
-			{spinner}
-			{content}
+		<div className="char__info-wraper">
+			<div className="char__info">
+				{skeleton}
+				{errorMessage}
+				{spinner}
+				{content}
+
+			</div>
+			<FindChar />
 		</div>
+
 	);
 };
 
@@ -94,6 +104,7 @@ const View = ({ char }) => {
 			<ul className="char__comics-list">
 				{comicsInfo.length > 0 ? comicsInfo : <li>Сharacter has no comics</li>}
 			</ul>
+
 		</>
 	);
 };

@@ -22,17 +22,14 @@ export const useLoadingMarvelData = (
 		getAllCharacters,
 		setLoading,
 	} = useMarvelService();
-	// console.log("");
-	// console.log(
-	//   `render : loading:${loading} error:${error} newItemLoading:${newItemLoading} data:${data}`
-	// );
+
 
 	useEffect(() => {
 		onRequest(true);
-		window.addEventListener("scroll", onRequestScroll);
-		return () => {
-			window.removeEventListener("scroll", onRequestScroll);
-		};
+		// window.addEventListener("scroll", onRequestScroll);
+		// return () => {
+		// 	window.removeEventListener("scroll", onRequestScroll);
+		// };
 	}, []);
 
 	useEffect(() => {
@@ -57,25 +54,25 @@ export const useLoadingMarvelData = (
 		setNewItemLoading(false);
 	};
 
-	const onRequest = (initial) => {
+	const onRequest = (initial, name) => {
 		//Pagination && //Get characters from Marvel API
 		clearError();
 		initial ? setNewItemLoading(false) : setNewItemLoading(true);
 		if (usingComponent === "comics") {
 			getComics(offset).then(onDataLoading);
-		} else {
+		} else if (usingComponent === 'characters') {
 			getAllCharacters(offset).then(onDataLoading);
 		}
 	};
 
-	const onRequestScroll = () => {
-		const scrollTop = window.scrollY;
-		const screen = window.innerHeight;
-		const heigth = document.documentElement.scrollHeight;
-		if (scrollTop + screen === heigth) {
-			setLoadOnScroll(true);
-		}
-	};
+	// const onRequestScroll = () => {
+	// 	const scrollTop = window.scrollY;
+	// 	const screen = window.innerHeight;
+	// 	const heigth = document.documentElement.scrollHeight;
+	// 	if (scrollTop + screen === heigth) {
+	// 		setLoadOnScroll(true);
+	// 	}
+	// };
 
 	const style = comicsEnded ? { display: "none" } : null;
 	const errorMessage = error ? <ErrorMessage /> : null;

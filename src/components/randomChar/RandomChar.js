@@ -17,6 +17,8 @@ const RandomChar = React.memo(() => {
 
 	const { loading, error, getCharacter, clearError } = useMarvelService();
 
+
+
 	const onChararcterLoading = (character) => {
 		setCharacter(character);
 	};

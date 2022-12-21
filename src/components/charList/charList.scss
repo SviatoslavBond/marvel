@@ -45,3 +45,22 @@
 		color: #fff;
 	}
 }
+
+.cardItem-enter {
+	opacity: 0;
+	transform: scale(0.9);
+}
+.cardItem-enter-active {
+	opacity: 1;
+	transform: translate(0);
+	transition: all 500ms ease-in;
+}
+.comicsItem-enter {
+	opacity: 0;
+	transform: scale(0.9);
+}
+.comicsItem-enter-active {
+	opacity: 1;
+	transform: translate(0);
+	transition: all 500ms ease-in;
+}
