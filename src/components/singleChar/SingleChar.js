@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './singleChar.scss';
-
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Helmet } from "react-helmet";
+import { useParams, useNavigate } from 'react-router-dom';
 import useMarvelService from '../services/MarvelSevices';
 import AppBanner from '../appBanner/AppBanner';
 
@@ -54,6 +54,13 @@ const View = ({ data }) => {
 	const { url, name, description, thumbnail } = data;
 	return (
 		<>
+			<Helmet>
+				<meta
+					name="description"
+					content={`${name}  character`}
+				/>
+				<title>{name}</title>
+			</Helmet>
 			<div className="single-char">
 				<a href={url}>
 					<img src={thumbnail} alt={name} className="single-char__img" />

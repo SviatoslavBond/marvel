@@ -7,14 +7,10 @@ import ErrorMessage from "../errorMessage/error";
 import Skeleton from "../skeleton/Skeleton";
 import FindChar from "../findChar/FindChar";
 
-
-
 import "./charInfo.scss";
 
 const CharInfo = ({ idChar }) => {
 	const [character, setCharacter] = useState(null); //1 Вибраний персонаж
-	// console.log(character, idChar);
-
 
 	const { loading, error, getCharacter } = useMarvelService();
 
@@ -111,5 +107,4 @@ const View = ({ char }) => {
 
 export default CharInfo;
 
-// console.log('http://gateway.marvel.com/v1/public/comics/56017'.replace(/\D/g, ''));
 

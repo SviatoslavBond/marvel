@@ -5,8 +5,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./comicsList.scss";
 
 const ComicsList = () => {
-	const { errorMessage, spinner, newItemLoading, onRequest, style, data } =
-		useLoadingMarvelData(10, "comics", 8);
+	const { errorMessage, spinner, newItemLoading, onRequest, style, data } = useLoadingMarvelData(10, "comics", 8);
 
 	return (
 		<div className="comics__list">
@@ -25,8 +24,6 @@ const ComicsList = () => {
 	);
 };
 const View = ({ data }) => {
-
-
 	return <ul className="comics__grid">{
 		<TransitionGroup component={null}>
 			{

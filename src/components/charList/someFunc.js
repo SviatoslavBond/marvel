@@ -1,8 +1,5 @@
-export default function logger() {
-	console.log('hello world');
 
-}
-export function second() {
-	console.log('second');
 
-}
+const pomise = () => Promise.resolve().then(() => console.log('1'))
+console.log(Promise)
+pomise()

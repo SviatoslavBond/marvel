@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import './singleComic.scss';
-
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Helmet } from "react-helmet";
+import { useParams, useNavigate } from 'react-router-dom';
 import useMarvelService from '../services/MarvelSevices';
 import AppBanner from '../appBanner/AppBanner';
 
 import ErrorMessage from '../errorMessage/error';
 import Spiner from "../spinner/spiner";
+
 const SingleComic = () => {
 	const { id } = useParams();
 	const [data, setData] = useState([]);
@@ -37,7 +38,6 @@ const SingleComic = () => {
 	const errorMessage = error ? <ErrorMessage /> : null;
 	const spinner = loading ? <Spiner /> : null;
 	const content = loading || error ? null : <View data={data} />;
-	// console.log(`loading: ${loading} error : ${error}`);
 
 	return (
 		<>
@@ -45,16 +45,23 @@ const SingleComic = () => {
 			{errorMessage}
 			{spinner}
 			{content}
-			{/* {error ? <ErrorMessage /> : loading ? <Spiner /> : <View data={data} />} */}
-		</>
 
+		</>
 	)
 }
+
 const View = ({ data }) => {
 	const navigate = useNavigate();
 	const { url, imgLink, title, descr, pageCount, language, price } = data;
 	return (
 		<>
+			<Helmet>
+				<meta
+					name="description"
+					content={`${title} comic book`}
+				/>
+				<title>{title}</title>
+			</Helmet>
 			<div className="single-comic">
 				<a href={url}>
 					<img src={imgLink} alt={title} className="single-comic__img" />

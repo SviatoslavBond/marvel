@@ -34,8 +34,6 @@ export const useLoadingMarvelData = (
 
 	useEffect(() => {
 		if (loadOnScroll) {
-			console.log("effect scroll");
-
 			onRequest();
 		}
 	}, [loadOnScroll]);
