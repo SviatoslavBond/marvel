@@ -76,21 +76,24 @@ const useMarvelService = () => {
 			url: urls[0].url,
 		};
 	};
+	
+	
 	const _transformSingleComics = (response) => {
 		const { id, title, thumbnail: { path, extension }, prices, urls, pageCount, textObjects } = response;
 		const imgLink = path + "." + extension;
-		return {
+		const result = {
 			id,
 			title,
-			price: prices[0].price,
+			price: prices[0].price || 0,
 			imgLink,
 			url: urls[0].url,
 			pageCount,
-			descr: textObjects[0].text || 'not description',
-			language: textObjects[0].language,
+			descr: textObjects.length > 0 ? textObjects[0].text : 'not description',
+			language: textObjects.length > 0 ? textObjects[0].language : 'lang is not avilable',
 		};
-
+		return result;
 	}
+	
 	return {
 		onError,
 		loading,
